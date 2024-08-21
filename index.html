@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Pairing Code</title>
+    <style>
+        /* Add your CSS styles here */
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        input {
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <label for="whatsapp-number">WhatsApp Number:</label>
+    <input type="text" id="whatsapp-number" placeholder="Enter WhatsApp number">
+    <button id="generate-pairing-code">Generate Pairing Code</button>
+    <div id="output"></div>
+    <script>
+        document.getElementById('generate-pairing-code').addEventListener('click', () => {
+            const number = document.getElementById('whatsapp-number').value;
+            fetch('/generate-pairing-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ number })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = 'Pairing Code: ' + data.pairingCode;
+            });
+        });
+    </script>
+</body>
+</html>
